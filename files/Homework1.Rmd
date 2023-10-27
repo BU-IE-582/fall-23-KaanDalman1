@@ -1,0 +1,9 @@
+---
+title: "Homework 1"
+author: "Kaan Dalman"
+date: "November 2, 2023"
+---
+
+**Here is my approach for task 4.1.**
+
+
