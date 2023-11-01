@@ -70,15 +70,15 @@ result3 <- grouped_data %>%
 
 print(result3, n=60)
 
-#histograms
+#histogram
 install.packages("ggplot2")
 
 library(ggplot2)
 library(dplyr)
 
 ggplot(grouped_data, aes(x = price)) +
-  geom_histogram(binwidth = 10, fill = "blue", color = "black") +
-  labs(title = "Histogramm der Preise", x = "Preis", y = "Häufigkeit")
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  labs(title = "Histogram", x = "price", y = "frequency")
 
 
 #Task Moving Window Correlation 

@@ -4,6 +4,100 @@ author: "Kaan Dalman"
 date: "November 2, 2023"
 ---
 
-**Here is my approach for task 4.1.**
+<p style="color:red">Disclaimer: ChatGPT-3.5 was used to solve this homework assignment</p>
 
 
+## 4.1. Descriptive Analysis
+
+### Verbal introduction
+
+The dataset to be analyzed consists of 60 companies listed on the Istanbul Stock Exchange "BIST100." The closing prices are provided on a daily basis at 15-minute intervals. The stock market trading hours are from 06:45 AM to 02:30 PM. The entire observation period spans from September 2012 to July 2019, which is approximately 83 months.
+
+
+### Dataset layout
+
+For the following analysis, I am using the "long data" format.
+
+
+| short_name | timestamp | price |
+| :--------- | :-------- | :---- |
+| ...        | ...       | ...   |
+
+
+
+### Measures of central tendency and dispersion
+
+```{r}
+# Loading the CSV file with commas as separators
+
+data <- read.csv("C:/Users/kaand/OneDrive/Desktop/Bogazici Courses/IE 582/Homework 1/all_ticks_long.csv/all_ticks_long.csv")
+
+# install.packages("dplyr")
+
+# Load the dplyr library
+
+library(dplyr)
+
+grouped_data <- data %>%
+  group_by(short_name)
+
+# Calculation of mean, median, var und sd
+
+result2 <- grouped_data %>%
+  summarize(
+    Mean_Price = mean(price, na.rm = TRUE),
+    Median_Price = median(price, na.rm = TRUE),
+    Variance = var(price, na.rm = TRUE),
+    StdDeviation = sd(price, na.rm = TRUE)
+  )
+
+# Print summary statistics
+
+print(result2, n=60)
+```
+
+### Interpretation of summary
+
+As measures of central tendency, I calculated the means and medians of the closing prices for all companies. As measures of dispersion, I used the variance and standard deviation.
+Setting na.rm=TRUE ensures that missing data points are not considered in the calculation of statistics. Another consideration is to examine the ranges of the mean values and medians: The lowest mean is 0.537 (ISYAT), and the highest mean is 81.4 (OTKAR), which corresponds to a range of 80.836. Since the mean is sensitive to outliers, we also consider the medians. The smallest median is 0.496 (ISYAT), and the largest median is 82.8 (OTKAR), which corresponds to a range of 82.304. For the two selected companies (ISYAT and OTKAR), the mean and median are close to each other. This suggests that the data is symmetric and approximately normally distributed. Furthermore, this indicates that there are no strong distortions in the data.
+
+### Measures of shape
+
+```{r}
+#install.packages("e1071")
+
+library(dplyr)
+library(e1071)
+
+result3 <- grouped_data %>%
+  summarize(
+    Skewness = skewness(price, na.rm = TRUE),
+    Kurtosis = kurtosis(price, na.rm = TRUE)
+  )
+
+print(result3, n=60)
+```
+
+### Interpretation of summary
+
+As measures of shape, I used skewness and kurtosis. For the interpretation of skewness, it holds that the closer the skewness value is to 0, the more symmetric the distribution. The sign indicates whether the distribution is right-skewed (for positive sign) or left-skewed (for negative sign). 
+An anomaly in the test statistic is the skewness value of "GOODY," which is 10.2. This value is very high in comparison to the other values.
+Kurtosis measures how flat or peaked a distribution is compared to the normal distribution. By default, a kurtosis of 3 indicates that a statistical distribution is similar to a normal distribution.The results indicate that the distributions are mostly flat (leptokurtic), except for "BAGFS" and "GOODY."
+Furthermore, it's worth noting in the analysis of the results that some output values in the R console were highlighted in red, which may be an indication that certain assumptions about normal distribution are not met or deviations from it are present.
+
+### Histogram
+
+```{r}
+#install.packages("ggplot2")
+
+library(ggplot2)
+
+
+ggplot(grouped_data, aes(x = price)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black") +
+  labs(title = "Histogram", x = "price", y = "frequency")
+```
+
+## 4.2 Moving Window Correlation
+
+For this task, I am examining the moving window correlation between two companies. I have chosen "Halkbank" (HALKB) and "İş Bankası" (ISCTR), both of which represent companies from the banking sector. My assumption is that there is a positive correlation between the stock prices of these two companies since they belong to the same sector. Furthermore, for the same reason, external influences should affect the stock prices of both companies in a similar manner.

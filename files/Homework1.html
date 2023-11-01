@@ -357,7 +357,274 @@ display: none;
 </div>
 
 
-<p><strong>Here is my approach for task 4.1.</strong></p>
+<p style="color:red">
+Disclaimer: ChatGPT-3.5 was used to solve this homework assignment
+</p>
+<div id="descriptive-analysis" class="section level2">
+<h2>4.1. Descriptive Analysis</h2>
+<div id="verbal-introduction" class="section level3">
+<h3>Verbal introduction</h3>
+<p>The dataset to be analyzed consists of 60 companies listed on the
+Istanbul Stock Exchange “BIST100.” The closing prices are provided on a
+daily basis at 15-minute intervals. The stock market trading hours are
+from 06:45 AM to 02:30 PM. The entire observation period spans from
+September 2012 to July 2019, which is approximately 83 months.</p>
+</div>
+<div id="dataset-layout" class="section level3">
+<h3>Dataset layout</h3>
+<p>For the following analysis, I am using the “long data” format.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">short_name</th>
+<th align="left">timestamp</th>
+<th align="left">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">…</td>
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="measures-of-central-tendency-and-dispersion" class="section level3">
+<h3>Measures of central tendency and dispersion</h3>
+<pre class="r"><code># Loading the CSV file with commas as separators
+
+data &lt;- read.csv(&quot;C:/Users/kaand/OneDrive/Desktop/Bogazici Courses/IE 582/Homework 1/all_ticks_long.csv/all_ticks_long.csv&quot;)
+
+# install.packages(&quot;dplyr&quot;)
+
+# Load the dplyr library
+
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>grouped_data &lt;- data %&gt;%
+  group_by(short_name)
+
+# Calculation of mean, median, var und sd
+
+result2 &lt;- grouped_data %&gt;%
+  summarize(
+    Mean_Price = mean(price, na.rm = TRUE),
+    Median_Price = median(price, na.rm = TRUE),
+    Variance = var(price, na.rm = TRUE),
+    StdDeviation = sd(price, na.rm = TRUE)
+  )
+
+# Print summary statistics
+
+print(result2, n=60)</code></pre>
+<pre><code>## # A tibble: 60 × 5
+##    short_name Mean_Price Median_Price  Variance StdDeviation
+##    &lt;chr&gt;           &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+##  1 AEFES          21.0         20.6      6.22          2.49 
+##  2 AKBNK           6.47         6.31     0.893         0.945
+##  3 AKSA            7.13         6.99     7.34          2.71 
+##  4 AKSEN           3.18         2.93     0.525         0.724
+##  5 ALARK           2.06         1.94     0.332         0.576
+##  6 ALBRK           1.37         1.36     0.0282        0.168
+##  7 ANACM           1.67         1.26     0.622         0.788
+##  8 ARCLK          15.4         15.0     20.5           4.53 
+##  9 ASELS          13.4          9.28    92.6           9.62 
+## 10 ASUZU           6.47         5.95     4.84          2.20 
+## 11 AYGAZ           8.10         7.72     6.81          2.61 
+## 12 BAGFS          10.4         10.6     13.1           3.62 
+## 13 BANVT           7.63         3.71    39.3           6.27 
+## 14 BRISA           6.54         6.73     1.68          1.30 
+## 15 CCOLA          36.9         34.8     45.5           6.75 
+## 16 CEMAS           1.21         0.87     0.640         0.800
+## 17 ECILC           2.08         1.82     0.948         0.974
+## 18 EREGL           4.18         3.04     7.24          2.69 
+## 19 FROTO          32.8         27.1    217.           14.7  
+## 20 GARAN           7.90         7.65     1.56          1.25 
+## 21 GOODY           3.10         3.19     0.786         0.886
+## 22 GUBRF           4.33         4.25     1.50          1.22 
+## 23 HALKB          10.9         10.7      9.43          3.07 
+## 24 ICBCT           2.83         2.03     3.20          1.79 
+## 25 ISCTR           5.13         4.85     1.01          1.00 
+## 26 ISDMR           5.35         5.91     2.88          1.70 
+## 27 ISFIN           1.56         0.864    3.11          1.76 
+## 28 ISYAT           0.537        0.496    0.0257        0.160
+## 29 KAREL           3.18         1.82     4.55          2.13 
+## 30 KARSN           1.33         1.29     0.0843        0.290
+## 31 KCHOL          12.2         12.0     10.1           3.18 
+## 32 KRDMB           2.22         2.20     0.471         0.686
+## 33 KRDMD           1.77         1.40     0.884         0.940
+## 34 MGROS          19.6         19.1     15.2           3.90 
+## 35 OTKAR          81.4         82.8    772.           27.8  
+## 36 PARSN           8.28         7.89    21.7           4.66 
+## 37 PETKM           2.54         2.28     1.90          1.38 
+## 38 PGSUS          24.8         25.6     58.6           7.66 
+## 39 PRKME           2.93         2.74     0.521         0.722
+## 40 SAHOL           8.62         8.61     0.913         0.955
+## 41 SASA            2.29         0.734    6.21          2.49 
+## 42 SISE            3.05         2.67     2.02          1.42 
+## 43 SKBNK           1.47         1.51     0.0870        0.295
+## 44 SODA            3.19         2.67     4.19          2.05 
+## 45 TCELL           9.83         9.70     5.55          2.36 
+## 46 THYAO           9.29         7.78    16.2           4.03 
+## 47 TKFEN           9.19         5.75    44.4           6.67 
+## 48 TOASO          16.6         16.6     40.0           6.33 
+## 49 TRKCM           2.03         1.63     1.21          1.10 
+## 50 TSKB            0.945        0.937    0.0241        0.155
+## 51 TTKOM           5.66         5.75     0.670         0.819
+## 52 TUKAS           1.74         1.53     0.752         0.867
+## 53 TUPRS          63.0         49.6   1050.           32.4  
+## 54 USAK            1.22         1.05     0.211         0.460
+## 55 VAKBN           4.74         4.47     0.956         0.978
+## 56 VESTL           5.94         6.32     8.01          2.83 
+## 57 YATAS           2.43         0.966    6.51          2.55 
+## 58 YKBNK           2.57         2.61     0.179         0.423
+## 59 YUNSA           4.08         4.11     1.81          1.35 
+## 60 ZOREN           1.25         1.25     0.0969        0.311</code></pre>
+</div>
+<div id="interpretation-of-summary" class="section level3">
+<h3>Interpretation of summary</h3>
+<p>As measures of central tendency, I calculated the means and medians
+of the closing prices for all companies. As measures of dispersion, I
+used the variance and standard deviation. Setting na.rm=TRUE ensures
+that missing data points are not considered in the calculation of
+statistics. Another consideration is to examine the ranges of the mean
+values and medians: The lowest mean is 0.537 (ISYAT), and the highest
+mean is 81.4 (OTKAR), which corresponds to a range of 80.836. Since the
+mean is sensitive to outliers, we also consider the medians. The
+smallest median is 0.496 (ISYAT), and the largest median is 82.8
+(OTKAR), which corresponds to a range of 82.304. For the two selected
+companies (ISYAT and OTKAR), the mean and median are close to each
+other. This suggests that the data is symmetric and approximately
+normally distributed. Furthermore, this indicates that there are no
+strong distortions in the data.</p>
+</div>
+<div id="measures-of-shape" class="section level3">
+<h3>Measures of shape</h3>
+<pre class="r"><code>#install.packages(&quot;e1071&quot;)
+
+library(dplyr)
+library(e1071)
+
+result3 &lt;- grouped_data %&gt;%
+  summarize(
+    Skewness = skewness(price, na.rm = TRUE),
+    Kurtosis = kurtosis(price, na.rm = TRUE)
+  )
+
+print(result3, n=60)</code></pre>
+<pre><code>## # A tibble: 60 × 3
+##    short_name Skewness  Kurtosis
+##    &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+##  1 AEFES        0.306   -0.446  
+##  2 AKBNK        0.579   -0.0400 
+##  3 AKSA         0.169   -0.102  
+##  4 AKSEN        0.826   -0.353  
+##  5 ALARK        0.646   -0.534  
+##  6 ALBRK        0.391    0.187  
+##  7 ANACM        0.713   -1.05   
+##  8 ARCLK        0.116   -0.767  
+##  9 ASELS        0.697   -0.918  
+## 10 ASUZU        1.48     2.35   
+## 11 AYGAZ        0.296   -1.06   
+## 12 BAGFS        2.97    21.3    
+## 13 BANVT        1.01    -0.00500
+## 14 BRISA       -0.170   -0.172  
+## 15 CCOLA        0.609   -0.673  
+## 16 CEMAS        2.35     7.84   
+## 17 ECILC        0.497   -1.06   
+## 18 EREGL        0.572   -1.03   
+## 19 FROTO        0.571   -1.04   
+## 20 GARAN        0.663    0.0885 
+## 21 GOODY       10.2    623.     
+## 22 GUBRF        0.502   -0.439  
+## 23 HALKB        0.205   -0.601  
+## 24 ICBCT        1.49     2.61   
+## 25 ISCTR        0.700   -0.574  
+## 26 ISDMR       -1.23     0.325  
+## 27 ISFIN        2.17     4.17   
+## 28 ISYAT        0.530    1.06   
+## 29 KAREL        0.859   -0.690  
+## 30 KARSN        1.03     1.28   
+## 31 KCHOL        0.0393  -1.09   
+## 32 KRDMB        0.495   -0.497  
+## 33 KRDMD        1.37     1.13   
+## 34 MGROS        0.466   -0.339  
+## 35 OTKAR       -0.234   -0.890  
+## 36 PARSN        1.12     1.93   
+## 37 PETKM        0.473   -1.12   
+## 38 PGSUS        0.215   -0.322  
+## 39 PRKME        0.659   -0.644  
+## 40 SAHOL        0.0563  -0.280  
+## 41 SASA         0.828   -1.02   
+## 42 SISE         0.512   -0.777  
+## 43 SKBNK       -0.0684  -1.09   
+## 44 SODA         0.536   -0.657  
+## 45 TCELL       -0.164    0.234  
+## 46 THYAO        0.932   -0.333  
+## 47 TKFEN        1.17     0.00824
+## 48 TOASO        0.110   -1.01   
+## 49 TRKCM        0.553   -0.990  
+## 50 TSKB         0.698    0.122  
+## 51 TTKOM       -0.791    0.453  
+## 52 TUKAS        1.69     3.24   
+## 53 TUPRS        0.681   -0.967  
+## 54 USAK         1.30     0.827  
+## 55 VAKBN        0.846   -0.0734 
+## 56 VESTL        0.182   -0.368  
+## 57 YATAS        1.07     0.0865 
+## 58 YKBNK       -0.241    0.0209 
+## 59 YUNSA        0.871    0.764  
+## 60 ZOREN        0.409    0.273</code></pre>
+</div>
+<div id="interpretation-of-summary-1" class="section level3">
+<h3>Interpretation of summary</h3>
+<p>As measures of shape, I used skewness and kurtosis. For the
+interpretation of skewness, it holds that the closer the skewness value
+is to 0, the more symmetric the distribution. The sign indicates whether
+the distribution is right-skewed (for positive sign) or left-skewed (for
+negative sign). An anomaly in the test statistic is the skewness value
+of “GOODY,” which is 10.2. This value is very high in comparison to the
+other values. Kurtosis measures how flat or peaked a distribution is
+compared to the normal distribution. By default, a kurtosis of 3
+indicates that a statistical distribution is similar to a normal
+distribution.The results indicate that the distributions are mostly flat
+(leptokurtic), except for “BAGFS” and “GOODY.” Furthermore, it’s worth
+noting in the analysis of the results that some output values in the R
+console were highlighted in red, which may be an indication that certain
+assumptions about normal distribution are not met or deviations from it
+are present.</p>
+</div>
+<div id="histogram" class="section level3">
+<h3>Histogram</h3>
+<pre class="r"><code>#install.packages(&quot;ggplot2&quot;)
+
+library(ggplot2)
+
+
+ggplot(grouped_data, aes(x = price)) +
+  geom_histogram(binwidth = 10, fill = &quot;blue&quot;, color = &quot;black&quot;) +
+  labs(title = &quot;Histogram&quot;, x = &quot;price&quot;, y = &quot;frequency&quot;)</code></pre>
+<p><img src="data:image/png;base64,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janeYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrSnGZYbh4z5lGgUfMljaneYFla0pxmWG4eM+ZRoFHzJY2p3mBZWtKcZlhuHjPmUaBR8yWNqd5gWVrS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" width="672" /></p>
+</div>
+</div>
+<div id="moving-window-correlation" class="section level2">
+<h2>4.2 Moving Window Correlation</h2>
+<p>For this task, I am examining the moving window correlation between
+two companies. I have chosen “Halkbank” (HALKB) and “İş Bankası”
+(ISCTR), both of which represent companies from the banking sector. My
+assumption is that there is a positive correlation between the stock
+prices of these two companies since they belong to the same sector.
+Furthermore, for the same reason, external influences should affect the
+stock prices of both companies in a similar manner.</p>
+</div>
 
 
 
