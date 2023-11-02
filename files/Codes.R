@@ -93,22 +93,6 @@ library(ggplot2)
 library(TTR)
 library(tidyr)
 
-#data_A <- subset(data, short_name == "AEFES")
-#data_B <- subset(data, short_name == "AKBNK")
-
-#data_A <- data_A %>%
- # group_by(year_month = format(as.Date(timestamp), "%Y-%m")) %>%
-  #summarize(avg_price = mean(price, na.rm = TRUE))
-#data_B <- data_B %>%
- # group_by(year_month = format(as.Date(timestamp), "%Y-%m")) %>%
-  #summarize(avg_price = mean(price, na.rm = TRUE))
-
-#unternehmenA <- data[data$short_name == "AEFES", ]
-#unternehmenB <- data[data$short_name == "AKBNK", ]
-
-# Annahme: Du möchtest die Moving Window Correlation für die Unternehmen "Unternehmen1" und "Unternehmen2" durchführen.
-
-
 
 data_filtered <- data %>%
   filter(short_name %in% c("AEFES", "AKBNK")) %>%

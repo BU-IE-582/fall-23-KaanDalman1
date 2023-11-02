@@ -11,7 +11,7 @@ date: "November 2, 2023"
 
 ### Verbal introduction
 
-The dataset to be analyzed consists of 60 companies listed on the Istanbul Stock Exchange "BIST100." The closing prices are provided on a daily basis at 15-minute intervals. The stock market trading hours are from 06:45 AM to 02:30 PM. The entire observation period spans from September 2012 to July 2019, which is approximately 83 months.
+The dataset to be analyzed consists of 60 companies listed on the Istanbul Stock Exchange "BIST100." The closing prices are provided on a daily basis at 15-minute intervals. The stock market trading hours are from 06:45 AM to 03:00 PM. The entire observation period spans from September 2012 to July 2019, which is approximately 83 months.
 
 
 ### Dataset layout
